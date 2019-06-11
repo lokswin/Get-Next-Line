@@ -24,15 +24,16 @@ int				main(int argc, char **argv)
 	fd2 = 0;
 	out = 0;
 	argc = argc + 1 - 1;
-	i = -1;
+	i = 0;
 	fd = open(argv[1], O_RDONLY);
 	ft_putstr("\n\nFD:");
 	ft_putnbr(fd);
 	ft_putstr("|_____________START_TEST1_____________|\n");
-	while (i++ < 5)
+	while (i < 5)
 	{
 		out = get_next_line(fd, &line);
 		printf("\n\n[ENTER_GNL=%d=END_GNL]\nLINE[%d]:|%s|\n|%p|", out, i, line, line);
+		i++;
 	}
 	close (fd);
 	/*i = 0;
