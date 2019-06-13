@@ -1,6 +1,5 @@
 В каких случаях 0
 
-
 В каких случаях 1
 
 
@@ -13,6 +12,9 @@ What is one static var?
 Return when newline == ‘\n’ ?
 
 FD = 0 don’t use
+
+Заменить молоки на ft_strnew
+
 
 
 42

@@ -28,8 +28,8 @@ int				main(int argc, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	ft_putstr("\n\nFD:");
 	ft_putnbr(fd);
-	ft_putstr("|_____________START_TEST1_____________|\n");
-	while (i < 5)
+	ft_putstr("|__X___X___X_____START_TEST1_____X___X___X__|\n");
+	while (i < 7)
 	{
 		out = get_next_line(fd, &line);
 		printf("\n\n[ENTER_GNL=%d=END_GNL]\nLINE[%d]:|%s|\n|%p|", out, i, line, line);
@@ -58,4 +58,12 @@ int				main(int argc, char **argv)
 //static char *buf[10240]
 //ulimit -a(show all) ulimit -n 10240(set n = 10240)
 //@k@s
+/*{
+		tmp[bytes] = '\0';
+		printf("[s%zd=%s]\n", i, s);
+		printf("[tmp%zd=%s]\n", i, tmp);
+		s = ft_strjoin(s, tmp);
+		printf("[s_2%zd=%s]\n", i, s);
+		i++;
+}*/
 }

@@ -17,19 +17,18 @@
 
 static char			*ft_gnl_write(const int fd, char **s)
 {
-	size_t			line_len;
-	size_t			s_len;
+	size_t			len;
 	char			*tmp_w;
 
-	line_len = fd;
-	line_len = 0;
-	s_len = ft_strlen(*s);
-	while ((s[0][line_len] != '\n') && (s[0][line_len] != '\0'))
-		line_len++;
-	if (!(tmp_w = (char *)malloc(sizeof(char) * (line_len + 1))))
-		return (NULL);
-	tmp_w = ft_strsub(*s, 0, line_len);
-	*s = ft_strsub(*s, line_len + 1, (s_len - line_len));
+	len = fd;
+	len = 0;
+	while ((s[0][len] != '\n') && (s[0][len] != '\0'))
+		len++;
+	if (!(tmp_w = (char *)malloc(sizeof(char) * (len + 1))))
+		return (0);
+	tmp_w = ft_strsub(*s, 0, len);
+	*s = ft_strsub(*s, len + 1, (ft_strlen(*s) - len));
+	len = 0;
 	return (tmp_w);
 }
 
@@ -49,6 +48,7 @@ static int			ft_gnl_read(const int fd, char **s)
 		tmp[bytes] = '\0';
 		*s = ft_strjoin(*s, tmp);
 	}
+	printf("tmp=%s", tmp);
 	free(tmp);
 	tmp = NULL;
 	if (bytes == -1)
@@ -59,6 +59,7 @@ static int			ft_gnl_read(const int fd, char **s)
 int					get_next_line(const int fd, char **line)
 {
 	static char		*out = NULL;
+	int				read_res;
 
 	if (fd < 0)
 		return (-1);
@@ -68,10 +69,16 @@ int					get_next_line(const int fd, char **line)
 			return (0);
 		out[0] = '\0';
 	}
-	if ((ft_gnl_read(fd, &out)) == -1)
-		return (-1);
+	read_res = ft_gnl_read(fd, &out);
+	if ((read_res == -1) || (read_res == 0))
+	{
+		free(out);
+		out = NULL;
+	}
+	printf("out1=%s", out);	
 	*line = ft_gnl_write(fd, &out);
-	if (*line == NULL)
+	printf("out1=%s", out);	
+	if (*line[0] == 0)
 		return (0);
-	return (1);
+	return (read_res);
 }
