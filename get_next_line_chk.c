@@ -32,7 +32,7 @@ int				main(int argc, char **argv)
 	while (i < 7)
 	{
 		out = get_next_line(fd, &line);
-		printf("\n\n[ENTER_GNL=%d=END_GNL]\nLINE[%d]:|%s|\n|%p|", out, i, line, line);
+		printf("\n\n[ENTER_GNL=%d=END_GNL]\nline[%d]:|%s|:=|%p|", out, i, line, line);
 		i++;
 	}
 	close (fd);
@@ -55,8 +55,8 @@ int				main(int argc, char **argv)
 	*/
 //make re;gcc -Wall -Wextra -Werror get_next_line_chk.c get_next_line.a ./libft/libft.a 
 //./a.out g3.txt > cat > newout
-//static char *buf[10240]
-//ulimit -a(show all) ulimit -n 10240(set n = 10240)
+//static char *buf[10240] *s = ft_strjoin(s, tmp2) then tmp2 = ft_strjoin(tmp, tmp2) ;
+//ulimit -a(show all) ulimit -n 10240(set n = 10240)ft_strjoin
 //@k@s
 /*{
 		tmp[bytes] = '\0';

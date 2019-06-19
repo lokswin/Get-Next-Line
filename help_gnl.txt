@@ -11,9 +11,12 @@ What is one static var?
 
 Return when newline == ‘\n’ ?
 
-FD = 0 don’t use
+FD = 0 don’t use or FD = unexisting_fd
 
 Заменить молоки на ft_strnew
+
+
+valgrind --leak-check=full -v --leak-resolution=med --show-leak-kinds=all --track-origins=yes ./a.out
 
 
 
@@ -202,10 +205,3 @@ Don’t forget to check the flag corresponding to the defense
 
 Conclusion
 Leave a comment on this evaluation
-
-General term of use of the site
-Privacy policy
-Legal notices
-Declaration on the use of cookies
-Terms of use for video surveillance
-Rules of procedure
