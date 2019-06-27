@@ -6,7 +6,7 @@
 #    By: drafe <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 20:00:16 by drafe             #+#    #+#              #
-#    Updated: 2019/06/02 15:56:18 by drafe            ###   ########.fr        #
+#    Updated: 2019/06/08 15:58:37 by drafe            ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -15,6 +15,8 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
 NAME = libft.a
+
+HEADERS = libft.h
 
 OBJ = ft_memset.o\
 	ft_bzero.o\
@@ -134,21 +136,17 @@ SRC = ft_memset.c\
 	ft_lstiter.c\
 	ft_lstmap.c\
 
-%.o: %.c libft.h
-	$(CC) $(CFLAGS) -c -o $(OBJ)
-
 all: $(NAME)
 
 $(NAME):
-	$(CC) $(CFLAGS) $(SRC) -c
-	@ar r $(NAME) $(OBJ)
-	@ranlib $(NAME)
+	$(CC) -c -I $(HEADERS) $(CFLAGS) $(SRC)
+	ar -rc $(NAME) $(OBJ)
 
 clean:
-	@rm -rf $(OBJ)\
-	@rm -rf libft.h.gch\
+	rm -rf $(OBJ)
 
 fclean: clean
-	@rm $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
+

@@ -10,43 +10,60 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft/libft.h"
 #include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
 
-static char			*ft_gnl_write(char **s)
+static int			ft_gnl_write(char **line, char **s_file)
 {
-	size_t			line_len;
+	char			*out;
+	char			*ptr;
+	size_t			out_len;
 	size_t			s_len;
-	char			*tmp_w;
 
-	line_len = 0;
-	tmp_w = NULL;
-	s_len = ft_strlen(*s);
-	while ((s[0][line_len] != '\n') && (s[0][line_len] != '\0'))
-		line_len++;
-	if (!(tmp_w = (char *)malloc(sizeof(char) * (line_len + 1))))
-		return (NULL);
-	tmp_w = ft_strsub(*s, 0, line_len);
-	
-	*s = ft_strsub(*s, line_len + 1, (s_len - line_len));
-	return (tmp_w);
+	out_len = 0;
+	s_len = ft_strlen(*s_file);
+	ptr = NULL;
+	out = NULL;
+	while ((s_file[0][out_len] != '\n') && (s_file[0][out_len] != '\0'))
+		out_len++;
+	out = ft_strsub(*s_file, 0, out_len);
+	ptr = ft_strsub(*s_file, out_len + 1, (s_len - out_len));
+	if ((s_file[0][0] == '\n') || (out_len >= 1))
+		out_len = 1;
+	free(*s_file);
+	*s_file = NULL;
+	*s_file = ptr;
+	*line = out;
+	return (out_len);
 }
 
 static int			ft_gnl_read(const int fd, char **s)
 {
 	char			*tmp;
+	char			*ptr;
 	int				bytes;
+	size_t			i;
 
 	tmp = NULL;
+	ptr = NULL;
 	if (!(tmp = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1))))
-		return (0);
-	ft_bzero(tmp, '\0');
-	while ((bytes = read(fd, tmp, BUFF_SIZE)) > 0)
+		return (-1);
+	while (((bytes = read(fd, tmp, BUFF_SIZE)) > 0))
 	{
 		tmp[bytes] = '\0';
-		*s = ft_strjoin(*s, tmp);
+		i = 0;
+		ptr = ft_strjoin(*s, tmp);
+		free(*s);
+		*s = NULL;
+		*s = ptr;		
+		while (s[0][i] != '\0')
+		{
+			if (s[0][i] == '\n')
+				break ;
+			i++;
+		}
+		if (i < ft_strlen(*s))
+			break;
+
 	}
 	free(tmp);
 	tmp = NULL;
@@ -57,22 +74,19 @@ static int			ft_gnl_read(const int fd, char **s)
 
 int					get_next_line(const int fd, char **line)
 {
-	static char		*out[10240];
-	size_t			i;
+	static char		*output_line[10240];
+	char			*ptr;
 
-	i = 0;
-	if ((fd < 0) || (!line))
+	ptr = NULL;
+	if ((fd < 0) || (!line) || (fd > 10240))
 		return (-1);
-	if (out[fd] == NULL)
+	if (output_line[fd] == NULL)
 	{
-		if (!(out[fd] = (char *)malloc(sizeof(char) * 1)))
+		if (!(output_line[fd] = (char *)malloc(sizeof(char) * 1)))
 			return (0);
-		out[fd][0] = '\0';
-	}	
-	if ((ft_gnl_read(fd, &out[fd])) == -1)
+		output_line[fd][0] = '\0';
+	}
+	if ((ft_gnl_read(fd, &output_line[fd])) == -1)
 		return (-1);
-	*line = ft_gnl_write(&out[fd]);
-	if (*line == NULL)
-		return (0);
-	return (1);
+	return(ft_gnl_write(line, &output_line[fd]));
 }
