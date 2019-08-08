@@ -1,4 +1,5 @@
 #Get_Next_Line
+	
 	Get Next Line
  	Function to read one line from file, which ends with a line break.
 SYNOPSIS
