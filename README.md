@@ -1,4 +1,4 @@
-##Get_Next_Line
+## Get_Next_Line
 	
 	Get Next Line(GNL)
  	Function to read one line from file, which ends with a line break.
